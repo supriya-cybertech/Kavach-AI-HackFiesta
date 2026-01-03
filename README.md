@@ -86,79 +86,46 @@ Every analysis ends with **exactly 3 simple steps**, such as:
 ---
 
 ## 🏗️ System Architecture
-
-```mermaid
+```mermaid 
 flowchart TB
-    %% =========================
-    %% Kavach AI – System Architecture
-    %% =========================
 
-    U[👤 End User<br/>(Elders / General Users)]
-    
-    %% ---------- Frontend ----------
-    U --> UI[🖥️ Streamlit Frontend<br/>Web UI / UX Layer]
+    U[End User]
 
-    UI --> TIN[📝 Text Input<br/>(SMS / Email / Chat)]
-    UI --> IIN[🖼️ Image Upload<br/>(Screenshot JPG/PNG)]
-    UI --> LOC[🌍 Country Selector]
-    UI --> LANG[🗣️ Language Selector]
+    U --> UI[Streamlit Frontend]
 
-    %% ---------- Input Processing ----------
-    TIN --> IP[⚙️ Input Processing Layer]
+    UI --> TIN[Text Input]
+    UI --> IIN[Image Upload]
+    UI --> LOC[Country Selector]
+    UI --> LANG[Language Selector]
+
+    TIN --> IP[Input Processing]
     IIN --> IP
 
-    IP -->|Validate Text| TV[✔️ Text Preprocessing]
-    IP -->|Validate Image| IV[✔️ Image Quality Check]
-    IV -->|Blurry / Invalid| ERR[⚠️ Graceful Error Message]
-    TV --> CTX
-    IV --> CTX
+    IP --> TV[Text Validation]
+    IP --> IV[Image Validation]
 
-    %% ---------- Localization ----------
+    IV --> ERR[Error Handling]
+
+    TV --> CTX[Localization Engine]
+    IV --> CTX
     LOC --> CTX
     LANG --> CTX
 
-    CTX[🌐 Localization & Context Engine<br/>
-        • Country Rules<br/>
-        • Regional Scam Patterns<br/>
-        • Cultural Tone Mapping<br/>
-        • Local Reporting Channels]
+    CTX --> PROMPT[Prompt Engineering]
 
-    %% ---------- Prompt Engineering ----------
-    CTX --> PROMPT[🧠 Prompt Engineering Layer<br/>
-        • Empathy-first Instructions<br/>
-        • No Technical Jargon<br/>
-        • Cultural Context Injection<br/>
-        • Safety Constraints]
+    PROMPT --> AI[Gemini 1.5 Flash API]
 
-    %% ---------- AI Engine ----------
-    PROMPT --> AI[🤖 Google Gemini 1.5 Flash<br/>
-        • Text Understanding<br/>
-        • Image + OCR Reasoning<br/>
-        • Multimodal Analysis]
+    AI --> RISK[Risk Classification]
 
-    %% ---------- Risk & Response ----------
-    AI --> RISK[🚦 Risk Classification Engine]
-    RISK --> SAFE[🟢 Safe]
-    RISK --> SUSP[🟡 Suspicious]
-    RISK --> DANG[🔴 Dangerous]
+    RISK --> SAFE[Safe]
+    RISK --> SUSP[Suspicious]
+    RISK --> DANG[Dangerous]
 
-    SAFE --> RESP
+    SAFE --> RESP[Response Formatter]
     SUSP --> RESP
     DANG --> RESP
 
-    RESP[📄 Response Formatter<br/>
-        • Simple Explanation<br/>
-        • Native Language Output<br/>
-        • Exactly 3 Action Steps<br/>
-        • Local Helpline Mapping]
-
-    %% ---------- Output ----------
-    RESP --> OUT[📢 Output Delivery Layer<br/>
-        • Text Response<br/>
-        • Risk Meter UI Update<br/>
-        • Voice-ready Output]
+    RESP --> OUT[Localized Output]
 
     OUT --> UI
-````
 
------
