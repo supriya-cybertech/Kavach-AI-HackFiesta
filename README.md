@@ -200,6 +200,25 @@ Offline-first lightweight mode
 
 
 ---
+### ⚙️ Scalability & Future-Ready Design
+
+- Plug-in support for:
+  - Voice input / output
+  - Messaging platform bots
+  - Country-specific scam datasets
+- Can be deployed on:
+  - Streamlit Cloud
+  - Cloud VM
+  - Containerized environments
+
+---
+
+### 🧠 Architectural Philosophy
+
+> **Kavach AI is not just a detection system.  
+> It is a communication system built on empathy, localization, and trust.**
+
+---
 
 ## 👨‍💻 Author & Vision
 
