@@ -185,3 +185,30 @@ Encourages timely reporting and awareness
 > *“Security should feel human—everywhere in the world. Because trust isn't built on code; it's built on understanding.”*
 
 ---
+
+## 🚀 Future Enhancements
+
+Voice input & text-to-speech output
+
+WhatsApp / Messenger bot integration
+
+Country-specific scam trend dashboard
+
+Family or caregiver alert system
+
+Offline-first lightweight mode
+
+
+---
+
+## 👨‍💻 Author & Vision
+
+Kavach AI is built with the belief that technology should protect people, not overwhelm them.
+
+   If you find this project valuable, ⭐ the repository and help spread digital safety awareness.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License — free to use for innovation and social good.
