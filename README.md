@@ -129,3 +129,59 @@ flowchart TB
 
     OUT --> UI
 
+
+````
+
+---
+
+## 🔐 Security & Privacy
+
+- API keys are masked and stored only during runtime
+- No user messages or images are stored
+- All analysis is performed in real time
+
+---
+
+## ⚙️ Installation & Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/kavach-ai.git
+cd kavach-ai
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+streamlit run app.py
+
+```
+---
+
+## 🧪 Sample Use Cases
+
+Fake bank or payment alerts
+
+Urgent delivery or courier scams
+
+Government or authority impersonation
+
+Lottery, prize, or reward fraud
+
+Social engineering messages on messaging apps
+
+----
+
+## 🌍 Global Social Impact
+
+Protects users across countries, cultures, and languages
+
+Makes cybersecurity understandable, not intimidating
+
+Reduces fear-driven digital fraud
+
+Encourages timely reporting and awareness
+
+> *“Security should feel human—everywhere in the world. Because trust isn't built on code; it's built on understanding.”*
+
+---
