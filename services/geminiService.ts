@@ -33,7 +33,7 @@ export const analyzeScam = async (
   country: string = "India"
 ): Promise<AnalysisResponse> => {
   // Always use the named parameter for apiKey
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.AIzaSyDoFRa17Jb9JfMqzl2Xg1etBmkAL1ohtUk });
   
   const contents: any[] = [];
   if (input.text) contents.push({ text: `Analyze this message: ${input.text}` });
