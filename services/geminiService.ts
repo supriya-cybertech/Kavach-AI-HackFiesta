@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { AnalysisResponse, LanguageCode } from "../types";
 
@@ -26,14 +25,14 @@ RISK CLASSIFICATION:
 You must return EXACTLY 3 action steps.`;
 };
 
-// Fast analysis using Gemini Flash Lite
+// Fast analysis using Gemini Flash
 export const analyzeScam = async (
   input: { text?: string; imageData?: string },
   language: LanguageCode,
   country: string = "India"
 ): Promise<AnalysisResponse> => {
-  // Always use the named parameter for apiKey
-  const ai = new GoogleGenAI({ apiKey: process.env.AIzaSyDoFRa17Jb9JfMqzl2Xg1etBmkAL1ohtUk });
+  // FIXED: Use environment variable instead of hardcoded API key
+  const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY || process.env.API_KEY });
   
   const contents: any[] = [];
   if (input.text) contents.push({ text: `Analyze this message: ${input.text}` });
@@ -49,8 +48,8 @@ export const analyzeScam = async (
 
   try {
     const response = await ai.models.generateContent({
-      // Using recommended alias 'gemini-flash-lite-latest'
-      model: "gemini-flash-lite-latest",
+      // FIXED: Use correct model name
+      model: "gemini-2.0-flash-exp",
       contents: { parts: contents },
       config: {
         systemInstruction: getMasterSystemInstruction(language, country),
@@ -74,8 +73,9 @@ export const analyzeScam = async (
       },
     });
 
-    // Extract text output directly from the .text property
-    return JSON.parse(response.text) as AnalysisResponse;
+    // FIXED: Parse response correctly
+    const result = await response.response;
+    return JSON.parse(result.text()) as AnalysisResponse;
   } catch (error) {
     console.error("Gemini Analysis Error:", error);
     throw new Error("I couldn't look into this right now. Please try sharing it with me again in a moment.");
@@ -87,7 +87,8 @@ export const getThinkingAnalysis = async (
   input: { text?: string; imageData?: string },
   language: LanguageCode
 ): Promise<string> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // FIXED: Use environment variable
+  const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY || process.env.API_KEY });
   
   const parts: any[] = [{ text: `Provide a deep, protective explanation of why this is or isn't a scam. Think through the psychological tricks being used. Language: ${language}. Input: ${input.text || "See image"}` }];
   if (input.imageData) {
@@ -99,17 +100,18 @@ export const getThinkingAnalysis = async (
     });
   }
 
+  // FIXED: Use correct model name and API structure
   const response = await ai.models.generateContent({
-    model: "gemini-3-pro-preview",
+    model: "gemini-2.0-flash-thinking-exp",
     contents: { parts },
     config: {
-      thinkingConfig: { thinkingBudget: 32768 },
       systemInstruction: "You are Kavach AI's core intelligence. Analyze scams with deep reasoning. Speak simply to the user but think through all hidden motives.",
     },
   });
 
-  // Extract text output directly from the .text property
-  return response.text;
+  // FIXED: Parse response correctly
+  const result = await response.response;
+  return result.text();
 };
 
 // Chatbot service
@@ -118,17 +120,18 @@ export const getChatResponse = async (
   history: { role: 'user' | 'model'; parts: { text: string }[] }[],
   language: LanguageCode
 ): Promise<string> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  const chat = ai.chats.create({
-    model: 'gemini-3-pro-preview',
-    config: {
-      systemInstruction: `You are Kavach AI, a protective digital guardian. Answer questions about cybersecurity and scams in a soft, grandchild-like tone. Language: ${language}. Stay helpful and alert.`,
-      thinkingConfig: { thinkingBudget: 32768 }
-    },
+  // FIXED: Use environment variable
+  const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY || process.env.API_KEY });
+  
+  // FIXED: Use correct model name and chat API
+  const chat = ai.models.startChat({
+    model: 'gemini-2.0-flash-exp',
+    systemInstruction: `You are Kavach AI, a protective digital guardian. Answer questions about cybersecurity and scams in a soft, grandchild-like tone. Language: ${language}. Stay helpful and alert.`,
     history: history as any,
   });
 
-  const result = await chat.sendMessage({ message });
-  // Extract text output directly from the .text property
-  return result.text;
+  const result = await chat.sendMessage(message);
+  // FIXED: Parse response correctly
+  const response = await result.response;
+  return response.text();
 };
